@@ -4,6 +4,8 @@ import {
   JetBrains_Mono as FontMono,
 } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/provider";
+import { TailwindIndicator } from "@/components/tw-indicator";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,7 +32,15 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} min-h-screen bg-background font-sans antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <TailwindIndicator />
+        </ThemeProvider>
       </body>
     </html>
   );

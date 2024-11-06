@@ -4,9 +4,9 @@ import {
   JetBrains_Mono as FontMono,
 } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TailwindIndicator } from "@/components/tw-indicator";
 import { SessionProvider } from "next-auth/react";
+import { SidebarProvider, ThemeProvider } from "@/components/providers";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -40,8 +40,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
-            <TailwindIndicator />
+            <SidebarProvider>
+              {children}
+              <TailwindIndicator />
+            </SidebarProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>

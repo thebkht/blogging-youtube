@@ -1,3 +1,4 @@
 import { ThemeProvider } from "./theme-provider";
+import { SidebarProvider } from "./sidebar";
 
-export { ThemeProvider };
+export { ThemeProvider, SidebarProvider };

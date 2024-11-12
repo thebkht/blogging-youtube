@@ -9,12 +9,12 @@ import { SessionProvider } from "next-auth/react";
 import { SidebarProvider, ThemeProvider } from "@/components/providers";
 import { auth } from "@/lib/auth";
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export const fontMono = FontMono({
+const fontMono = FontMono({
   subsets: ["latin"],
   variable: "--font-mono",
 });

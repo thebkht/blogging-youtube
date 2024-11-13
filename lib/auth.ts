@@ -1,11 +1,31 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import NextAuth from "next-auth";
+import NextAuth, { type DefaultSession } from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db/drizzle";
 import { accounts, sessions, users, verificationTokens } from "./db/schema";
 import Google from "next-auth/providers/google";
 
 const VERCE_DEVELOPMENT = process.env.VERCEL_URL === "development";
+
+declare module "next-auth" {
+  /**
+   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: {
+      /** The user's postal address. */
+
+      id: string;
+      username: string;
+      /**
+       * By default, TypeScript merges new interface properties and overwrites existing ones.
+       * In this case, the default session user properties will be overwritten,
+       * with the new ones defined above. To keep the default session user properties,
+       * you need to add them back into the newly declared interface.
+       */
+    } & DefaultSession["user"];
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -47,6 +67,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.user = user;
       }
       return token;
+    },
+    session: async ({ session, user }) => {
+      session.user = {
+        ...session?.user,
+        id: user?.id,
+        // @ts-expect-error
+        username: user?.username,
+      };
+      return session;
     },
   },
 });

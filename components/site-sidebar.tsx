@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Icons } from "./icons";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -31,6 +31,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { createPost } from "@/lib/actions";
 
 const items = [
   {
@@ -71,6 +72,7 @@ export default function SiteSidebar({
   ...props
 }: React.ComponentPropsWithoutRef<typeof Sidebar>) {
   const pathname = usePathname();
+  const router = useRouter();
   const { data: session } = useSession();
   const { setTheme, theme } = useTheme();
   return (
@@ -116,6 +118,12 @@ export default function SiteSidebar({
                       buttonVariants({ size: "lg" }),
                       "my-2 hover:text-primary-foreground",
                     )}
+                    onClick={async () => {
+                      const post = await createPost();
+                      if (post) {
+                        router.push(`/editor/${post.id}`);
+                      }
+                    }}
                   >
                     Post
                   </SidebarMenuButton>

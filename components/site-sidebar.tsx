@@ -29,7 +29,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ChevronsUpDown } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 const items = [
   {
@@ -95,6 +96,32 @@ export default function SiteSidebar({
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+            {session && (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link href={`/${session.user.username}`}>
+                      {pathname === `/${session.user.username}` ? (
+                        <Icons.profileActive className="h-7 w-7" />
+                      ) : (
+                        <Icons.profile className="h-7 w-7" />
+                      )}
+                      <span>Profile</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    className={cn(
+                      buttonVariants({ size: "lg" }),
+                      "my-2 hover:text-primary-foreground",
+                    )}
+                  >
+                    Post
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            )}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

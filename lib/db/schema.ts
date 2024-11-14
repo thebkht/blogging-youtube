@@ -91,7 +91,7 @@ export const authenticators = pgTable(
   }),
 );
 
-export const posts = pgTable("posts", {
+export const posts = pgTable("blog_posts", {
   id: uuid("id").primaryKey().defaultRandom(),
   authorId: text("author_id")
     .notNull()

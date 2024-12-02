@@ -26,7 +26,9 @@ import { TextButtons } from "./editor/selectors/text-buttons";
 import { ColorSelector } from "./editor/selectors/color-selector";
 import { useState } from "react";
 import { defaultExtensions } from "./editor/extensions";
-import { handleCommandNavigation } from "novel/extensions";
+import { handleCommandNavigation, ImageResizer } from "novel/extensions";
+import { handleImageDrop, handleImagePaste } from "novel/plugins";
+import { uploadFn } from "./editor/image-upload";
 
 export function ContentField({
   form,
@@ -48,6 +50,7 @@ export function ContentField({
             <FormControl>
               <EditorRoot>
                 <EditorContent
+                  immediatelyRender={false}
                   initialContent={generateJSON(field.value, defaultExtensions)}
                   onUpdate={({ editor }) => {
                     const html = editor.getHTML();
@@ -58,14 +61,15 @@ export function ContentField({
                     handleDOMEvents: {
                       keydown: (_view, event) => handleCommandNavigation(event),
                     },
-                    // handlePaste: (view, event) =>
-                    //   handleImagePaste(view, event, uploadFn),
-                    // handleDrop: (view, event, _slice, moved) =>
-                    //   handleImageDrop(view, event, moved, uploadFn),
+                    handlePaste: (view, event) =>
+                      handleImagePaste(view, event, uploadFn),
+                    handleDrop: (view, event, _slice, moved) =>
+                      handleImageDrop(view, event, moved, uploadFn),
                     attributes: {
                       class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
                     },
                   }}
+                  slotAfter={<ImageResizer />}
                   className="rounded-xl border"
                 >
                   <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">

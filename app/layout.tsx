@@ -8,6 +8,7 @@ import { TailwindIndicator } from "@/components/tw-indicator";
 import { SessionProvider } from "next-auth/react";
 import { SidebarProvider, ThemeProvider } from "@/components/providers";
 import { auth } from "@/lib/auth";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default async function RootLayout({
           >
             <SidebarProvider>
               {children}
+              <Toaster />
               <TailwindIndicator />
             </SidebarProvider>
           </ThemeProvider>

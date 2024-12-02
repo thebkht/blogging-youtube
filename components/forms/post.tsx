@@ -11,10 +11,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ContentField } from "./content-field";
 import { postFormSchema } from "@/lib/types";
+import { PostSettings } from "./post-settings";
 
 export function PostForm({ post }: { post: z.infer<typeof postFormSchema> }) {
   const form = useForm<z.infer<typeof postFormSchema>>({
@@ -25,6 +25,7 @@ export function PostForm({ post }: { post: z.infer<typeof postFormSchema> }) {
   });
 
   // const [image, setImage] = useState<File | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
 
   function onSubmit(values: z.infer<typeof postFormSchema>) {
     // Do something with the form values.
@@ -65,6 +66,7 @@ export function PostForm({ post }: { post: z.infer<typeof postFormSchema> }) {
           <ContentField form={form} />
         </form>
       </Form>
+      <PostSettings form={form} open={open} onOpenChange={setOpen} />
     </>
   );
 }

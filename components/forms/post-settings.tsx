@@ -41,7 +41,6 @@ export function PostSettings({
   ...props
 }: {
   form: UseFormReturn<z.infer<typeof postFormSchema>>;
-     onClick: () => void;
 } & React.ComponentProps<typeof Dialog>) {
   const isMobile = useIsMobile();
   const { data: session } = useSession();
@@ -199,7 +198,9 @@ export function PostSettings({
           </FormItem>
         )}
       />
-      <Button type="submit" form="post-editor">Publish</Button>
+      <Button type="submit" form="post-editor">
+        Publish
+      </Button>
     </React.Fragment>
   );
 

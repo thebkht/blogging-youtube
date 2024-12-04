@@ -1,5 +1,5 @@
 .ProseMirror {
-  @apply p-12 px-8 sm:px-12;
+  @apply min-h-24 rounded-md px-3 py-2 text-base md:text-sm;
 }
 
 .ProseMirror .is-editor-empty:first-child::before {

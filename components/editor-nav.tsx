@@ -16,7 +16,7 @@ export function EditorNavbar({
   const { data: session } = useSession();
 
   return (
-    <nav className="absolute left-0 top-0 flex h-14 w-screen items-center justify-between border-b bg-background/65 p-4 shadow-md backdrop-blur-md">
+    <nav className="fixed left-0 top-0 flex h-14 w-screen items-center justify-between border-b bg-background/65 p-4 shadow-md backdrop-blur-md">
       <Link
         href={`/${session?.user.username}`}
         className={cn(

@@ -5,7 +5,7 @@ import { PostCard } from "./post-card";
 import { PostPage } from "@/lib/types";
 import { InfinitiveContainer } from "./infinitive-container";
 
-export default function ForYou() {
+export default function Following() {
   const {
     data,
     fetchNextPage,
@@ -14,10 +14,10 @@ export default function ForYou() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["post-feed", "for-you"],
+    queryKey: ["post-feed", "following"],
     queryFn: ({ pageParam = 0 }) =>
       axios
-        .get<PostPage>(`/api/posts/for-you`, {
+        .get<PostPage>(`/api/posts/following`, {
           params: { cursor: pageParam },
         })
         .then((res) => res.data),

@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/drizzle";
-import { bookmarks, comments, posts, users } from "@/lib/db/schema";
+import { bookmarks, comments, follows, posts, users } from "@/lib/db/schema";
 import { and, count, eq, ne } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,6 +11,13 @@ export async function GET(req: NextRequest) {
     const limit = 10;
     const session = await auth();
     const user = session?.user;
+
+    if (!user) {
+      return NextResponse.json({
+        status: 401,
+        body: { error: "Unauthorized" },
+      });
+    }
 
     const postData = await db
       .select({
@@ -43,6 +50,13 @@ export async function GET(req: NextRequest) {
       .leftJoin(comments, eq(posts.id, comments.postId))
       .leftJoin(bookmarks, eq(posts.id, bookmarks.postId))
       .leftJoin(users, eq(posts.authorId, users.id))
+      .innerJoin(
+        follows,
+        and(
+          eq(follows.followerId, user.id),
+          eq(follows.followeeId, posts.authorId),
+        ),
+      )
       .where(
         and(
           eq(posts.published, true),

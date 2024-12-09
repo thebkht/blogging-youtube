@@ -1,3 +1,4 @@
+import Following from "@/components/following";
 import ForYou from "@/components/for-you";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -16,7 +17,9 @@ export default function HomePage() {
         <TabsContent value="foryou">
           <ForYou />
         </TabsContent>
-        <TabsContent value="following">Change your password here.</TabsContent>
+        <TabsContent value="following">
+          <Following />
+        </TabsContent>
       </Tabs>
     </>
   );

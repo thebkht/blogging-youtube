@@ -27,7 +27,10 @@ export async function GET(req: NextRequest) {
           followings: count(users.id),
         },
         publishedAt: posts.publishedAt,
-        image: posts.image,
+        image: {
+          url: posts.image,
+          blurhash: posts.imageBlurhash,
+        },
         slug: posts.slug,
         likes: posts.likes,
         reads: posts.reads,

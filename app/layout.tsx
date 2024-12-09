@@ -6,7 +6,11 @@ import {
 import "./globals.css";
 import { TailwindIndicator } from "@/components/tw-indicator";
 import { SessionProvider } from "next-auth/react";
-import { SidebarProvider, ThemeProvider } from "@/components/providers";
+import {
+  ReactQueryProvider,
+  SidebarProvider,
+  ThemeProvider,
+} from "@/components/providers";
 import { auth } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -37,18 +41,20 @@ export default async function RootLayout({
         className={`${fontSans.variable} ${fontMono.variable} min-h-screen bg-background font-sans antialiased`}
       >
         <SessionProvider session={session}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
-              {children}
-              <Toaster />
-              <TailwindIndicator />
-            </SidebarProvider>
-          </ThemeProvider>
+          <ReactQueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider>
+                {children}
+                <Toaster />
+                <TailwindIndicator />
+              </SidebarProvider>
+            </ThemeProvider>
+          </ReactQueryProvider>
         </SessionProvider>
       </body>
     </html>

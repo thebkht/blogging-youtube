@@ -23,3 +23,11 @@ export function toBase64(file: File): Promise<string> {
     reader.onerror = (error) => reject(error);
   });
 }
+
+export function formatDate(date: string | Date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}

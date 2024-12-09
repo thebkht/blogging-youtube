@@ -1,6 +1,7 @@
 import { useInView } from "react-intersection-observer";
 
-interface InfinitiveContainerProps extends React.PropsWithChildren {
+interface InfinitiveContainerProps
+  extends React.PropsWithChildren {
   onIntersect: () => void;
   className?: string;
 }
@@ -20,7 +21,7 @@ export function InfinitiveContainer({
 
   return (
     <div {...props}>
-      {props.children}
+     {props.children}
       <div ref={ref} />
     </div>
   );

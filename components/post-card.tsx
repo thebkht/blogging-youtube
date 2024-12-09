@@ -28,15 +28,15 @@ export function PostCard({
         </div>
         <div className="grow">
           <CardHeader className="grow flex-row items-center justify-between p-4">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 text-sm">
               <Link href={`/${post.user.username}`} className="font-bold">
                 {post.user.name}
               </Link>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-muted-foreground">
                 @{post.user.username}
               </span>
-              <span className="mx-0.5 text-sm">·</span>
-              <p className="text-sm text-muted-foreground">
+              <span className="mx-0.5">·</span>
+              <p className="text-muted-foreground">
                 {formatDate(post.publishedAt)}
               </p>
             </div>

@@ -20,47 +20,53 @@ export function PostCard({
   return (
     <article>
       <Card className={cn("flex gap-2", className)} {...props}>
-        <Avatar>
-          <AvatarImage src={post.user.image} alt={post.user.username} />
-          <AvatarFallback>{post.user.username.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <CardContent>
-          <CardHeader className="flex-row items-center justify-between">
-            <div className="flex items-center gap-1">
+        <div className="p-4 pr-0">
+          <Avatar>
+            <AvatarImage src={post.user.image} alt={post.user.username} />
+            <AvatarFallback>{post.user.username.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </div>
+        <div className="grow">
+          <CardHeader className="grow flex-row items-center justify-between p-4">
+            <div className="flex items-center gap-1.5">
               <Link href={`/${post.user.username}`} className="font-bold">
                 {post.user.name}
               </Link>
-              <span className="text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 @{post.user.username}
               </span>
-              <span className="mx-0.5">·</span>
-              <p className="text-muted-foreground">
+              <span className="mx-0.5 text-sm">·</span>
+              <p className="text-sm text-muted-foreground">
                 {formatDate(post.publishedAt)}
               </p>
             </div>
           </CardHeader>
-          <CardTitle>
-            <Link
-              href={`/${post.user.username}/${post.slug}`}
-              className="font-bold"
-            >
-              {post.title}
-            </Link>
-          </CardTitle>
-          {post.image.url !== "" && (
-            <div className="relative w-full">
-              <Image
-                src={post.image.url}
-                alt={post.title}
-                className="w-full rounded-md"
-                placeholder="blur"
-                fill
-                blurDataURL={post.image.blurhash}
-              />
-            </div>
-          )}
-          <CardDescription>{post.description}</CardDescription>
-        </CardContent>
+          <CardContent className="space-y-2 p-4 pt-0">
+            <CardTitle>
+              <Link
+                href={`/${post.user.username}/${post.slug}`}
+                className="line-clamp-2 font-bold"
+              >
+                {post.title}
+              </Link>
+            </CardTitle>
+            {post.image.url !== "" && (
+              <div className="relative w-full">
+                <Image
+                  src={post.image.url}
+                  alt={post.title}
+                  className="w-full rounded-md"
+                  placeholder="blur"
+                  fill
+                  blurDataURL={post.image.blurhash}
+                />
+              </div>
+            )}
+            <CardDescription className="line-clamp-3">
+              {post.description}
+            </CardDescription>
+          </CardContent>
+        </div>
       </Card>
     </article>
   );

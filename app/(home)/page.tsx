@@ -4,10 +4,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function HomePage() {
   return (
     <>
-      <Tabs defaultValue="foryou" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="foryou">For You</TabsTrigger>
-          <TabsTrigger value="following">Following</TabsTrigger>
+      <Tabs defaultValue="foryou" className="w-full max-w-xl">
+        <TabsList className="w-full">
+          <TabsTrigger className="flex-1" value="foryou">
+            For You
+          </TabsTrigger>
+          <TabsTrigger className="flex-1" value="following">
+            Following
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="foryou">
           <ForYou />

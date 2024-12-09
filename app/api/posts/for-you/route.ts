@@ -6,8 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const cursor = Number(req.nextUrl.searchParams.get("cursor"));
-    const limit = 10;
+    const cursorParam = req.nextUrl.searchParams.get("cursor");
+    const cursor = cursorParam ? parseInt(cursorParam, 10) : 0;
+    const limit = 5;
     const session = await auth();
     const user = session?.user;
 
@@ -49,16 +50,16 @@ export async function GET(req: NextRequest) {
         ),
       )
       .orderBy(posts.publishedAt)
-      .offset(cursor ? cursor : 0)
+      .offset(cursor)
       .groupBy(posts.id, users.id);
 
-    const nextCursor =
-      postData.length > limit ? postData[postData.length].id : null;
+    const hasNextPage = postData.length > limit;
+    const nextCursor = hasNextPage ? cursor + limit : null;
 
     return NextResponse.json({
       data: {
         posts: postData.slice(0, limit),
-        nextCursor: nextCursor,
+        nextCursor: nextCursor !== null ? nextCursor.toString() : null,
       },
     });
   } catch (error) {

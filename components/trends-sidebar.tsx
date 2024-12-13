@@ -113,6 +113,7 @@ async function getWhoToFollow() {
         username: users.username,
         name: users.name,
         image: users.image,
+        followersCount: sql<number>`COUNT(${follows.followerId})`,
       })
       .from(users)
       .where(
@@ -125,6 +126,8 @@ async function getWhoToFollow() {
           )`,
         ),
       )
+      .groupBy(users.id)
+      .orderBy(sql`followersCount DESC`)
       .limit(5);
     return data;
   }

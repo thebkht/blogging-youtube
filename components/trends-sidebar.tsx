@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/drizzle";
 import { follows, posts, users } from "@/lib/db/schema";
-import { and, eq, ne, sql } from "drizzle-orm";
+import { and, count, eq, ne, sql } from "drizzle-orm";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -97,7 +97,7 @@ async function getWhoToFollow() {
         username: users.username,
         name: users.name,
         image: users.image,
-        followersCount: sql<number>`COUNT(${follows.followerId})`,
+        followersCount: count(follows.followerId).as("followersCount"),
       })
       .from(users)
       .leftJoin(follows, eq(users.id, follows.followeeId))
@@ -113,7 +113,7 @@ async function getWhoToFollow() {
         username: users.username,
         name: users.name,
         image: users.image,
-        followersCount: sql<number>`COUNT(${follows.followerId})`,
+        followersCount: count(follows.followerId).as("followersCount"),
       })
       .from(users)
       .where(
